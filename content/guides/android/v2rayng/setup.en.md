@@ -7,7 +7,7 @@ setupTime: "5 mins"
 locale: "en"
 order: 1
 category: "setup"
-directDownloadUrl: "https://github.com/2dust/v2rayNG/releases/download/2.2.5/v2rayNG_2.2.5_universal.apk"
+directDownloadUrl: "https://play.google.com/store/apps/details?id=com.github.v2raygg"
 ---
 
 ## Adding a Subscription Link

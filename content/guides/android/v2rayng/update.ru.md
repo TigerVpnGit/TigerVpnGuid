@@ -7,7 +7,7 @@ setupTime: "2 мин"
 locale: "ru"
 order: 1
 category: "update"
-directDownloadUrl: "https://github.com/2dust/v2rayNG/releases/download/2.2.5/v2rayNG_2.2.5_universal.apk"
+directDownloadUrl: "https://play.google.com/store/apps/details?id=com.github.v2raygg"
 ---
 
 ## Обновление ссылки на подписку
