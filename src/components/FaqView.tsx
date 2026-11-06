@@ -46,43 +46,46 @@ export default function FaqView() {
 
       {/* دکمه‌های ارتباطی */}
       <div className="text-center glass p-8 rounded-[var(--radius)] flex flex-col items-center justify-center gap-5 mt-10">
-        <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
+        <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
           {locale === 'fa' ? 'همین حالا به ما بپیوندید!' : locale === 'ru' ? 'Присоединяйтесь к нам прямо сейчас!' : 'Join us right now!'}
         </h2>
         
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {/* دکمه ربات (خرید) */}
+        {/* کلاس flex-col برای موبایل (زیر هم) و sm:flex-row برای دسکتاپ (کنار هم) */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+          
+          {/* ۱. دکمه خرید (ربات) - بالا در موبایل، راست در دسکتاپ */}
           <a 
             href="https://t.me/TigerVPNBot" /* <--- آیدی ربات */
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#229ED9] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#1e8dc2] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#229ED9]/30"
+            className="inline-flex w-full sm:w-auto justify-center items-center gap-2 rounded-full bg-[#229ED9] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#1e8dc2] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#229ED9]/30"
           >
             <FontAwesomeIcon icon={faTelegram} className="h-4 w-4" />
             {locale === 'fa' ? 'خرید اشتراک (ربات)' : 'Buy Subscription (Bot)'}
           </a>
 
-          {/* دکمه کانال تلگرام */}
+          {/* ۲. دکمه اینستاگرام - وسط در موبایل و دسکتاپ */}
+          <a 
+            href="https://instagram.com/Tiger.VPN" /* <--- آیدی اینستاگرام */
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex w-full sm:w-auto justify-center items-center gap-2 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] px-5 py-2.5 text-sm text-white font-bold transition-all hover:opacity-90 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E1306C]/30"
+          >
+            <FontAwesomeIcon icon={faInstagram} className="h-4 w-4" />
+            Instagram
+          </a>
+
+          {/* ۳. دکمه کانال - پایین در موبایل، چپ در دسکتاپ */}
           <a 
             href="https://t.me/TigerVPNChannel" /* <--- آیدی کانال */
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#0088cc] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#007ab8] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0088cc]/30"
+            className="inline-flex w-full sm:w-auto justify-center items-center gap-2 rounded-full bg-[#0088cc] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#007ab8] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0088cc]/30"
           >
             <FontAwesomeIcon icon={faTelegram} className="h-4 w-4" />
             {locale === 'fa' ? 'کانال اطلاع‌رسانی' : 'News Channel'}
           </a>
 
-          {/* دکمه اینستاگرام */}
-          <a 
-            href="https://instagram.com/Tiger.VPN" /* <--- آیدی اینستاگرام */
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#E1306C] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#c13584] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E1306C]/30"
-          >
-            <FontAwesomeIcon icon={faInstagram} className="h-4 w-4" />
-            Instagram
-          </a>
         </div>
       </div>
     </div>
