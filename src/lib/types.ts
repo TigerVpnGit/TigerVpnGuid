@@ -1,7 +1,7 @@
 export type Locale = 'en' | 'ru' | 'fa';
 
 export const LOCALES: Locale[] = ['en', 'ru', 'fa'];
-export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_LOCALE: Locale = 'fa';
 export const RTL_LOCALES: Locale[] = ['fa'];
 
 export type Difficulty = 'Beginner' | 'Intermediate' | 'Advanced';
