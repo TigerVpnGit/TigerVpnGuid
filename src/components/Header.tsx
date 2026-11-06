@@ -49,10 +49,10 @@ export default function Header() {
           
           <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full overflow-hidden border-2 border-transparent bg-slate-900 shadow-lg bg-clip-padding" style={{ backgroundImage: 'linear-gradient(#0f172a, #0f172a), var(--gradient)', backgroundOrigin: 'border-box', backgroundClip: 'padding-box, border-box' }}>
             <Image 
-              src="/tiger-logo.png" 
-              alt="Tiger VPN" 
-              fill
-              className="object-cover p-0.5" 
+             src="/TigerVpnGuid/tiger-logo.png" // <--- نام مخزن به اول مسیر اضافه شد
+             alt="Tiger VPN" 
+             fill
+             className="object-cover p-0.5" 
             />
           </div>
           
