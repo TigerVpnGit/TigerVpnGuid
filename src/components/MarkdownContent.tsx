@@ -3,10 +3,6 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-/**
- * Renders pre-baked guide HTML and progressively enhances every `<pre>` code /
- * config block with a "Copy" button backed by the Web Clipboard API.
- */
 export default function MarkdownContent({ html }: { html: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
@@ -15,6 +11,16 @@ export default function MarkdownContent({ html }: { html: string }) {
     const root = ref.current;
     if (!root) return;
 
+    // ۱. اصلاح مسیر تصاویر (اضافه کردن نام مخزن به ابتدای آدرس)
+    const images = Array.from(root.querySelectorAll('img'));
+    for (const img of images) {
+      const src = img.getAttribute('src');
+      if (src && src.startsWith('/') && !src.startsWith('/TigerVpnGuid')) {
+        img.setAttribute('src', `/TigerVpnGuid${src}`);
+      }
+    }
+
+    // ۲. اضافه کردن دکمه کپی به کدها
     const blocks = Array.from(root.querySelectorAll('pre'));
     const cleanups: Array<() => void> = [];
 
@@ -57,7 +63,6 @@ export default function MarkdownContent({ html }: { html: string }) {
     <div
       ref={ref}
       className="prose prose-ultimateguide max-w-none"
-      // HTML is generated at build time from trusted in-repo Markdown.
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
