@@ -3,9 +3,9 @@
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { usePathname } from 'next/navigation';
 
 import { useLocale } from './Providers';
-import { localizePath, stripBasePath, withBasePath } from '@/lib/locale-paths';
 import { LOCALES, type Locale } from '@/lib/types';
 
 const LANGUAGE_LABELS: Record<Locale, string> = {
@@ -17,24 +17,32 @@ const LANGUAGE_LABELS: Record<Locale, string> = {
 export default function LanguageSwitcher() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
+  const pathname = usePathname(); // گرفتن مسیر فعلی سایت
 
   const handleChange = (next: Locale) => {
     setLocale(next);
-    let currentPath = stripBasePath(window.location.pathname);
     
-    // پاک کردن اسلش اضافی از انتهای مسیر فعلی
-    if (currentPath !== '/') {
-       currentPath = currentPath.replace(/\/$/, '');
+    // جدا کردن بخش‌های آدرس با اسلش
+    // مثلا /fa/faq به این شکل میشه: ['', 'fa', 'faq']
+    const segments = pathname.split('/');
+    
+    // تغییر زبان
+    if (segments.length > 1) {
+      segments[1] = next; 
+    } else {
+      segments.push(next);
     }
     
-    let newPath = withBasePath(localizePath(currentPath, next));
+    let newPath = segments.join('/');
+    if (newPath === '') newPath = '/';
     
-    // اضافه کردن اجباری اسلش به انتها برای جلوگیری از خطای 404
+    // اضافه کردن اسلش به انتها برای جلوگیری از خطای 404
     if (!newPath.endsWith('/')) {
       newPath += '/';
     }
     
-    window.location.assign(newPath);
+    // هدایت با در نظر گرفتن مسیر گیت‌هاب (TigerVpnGuid)
+    window.location.assign(`/TigerVpnGuid${newPath}`);
   };
 
   return (
