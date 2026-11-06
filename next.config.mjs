@@ -1,9 +1,11 @@
-import type { NextConfig } from 'next';
-
-export default nextConfig;
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   output: 'export',
   basePath: '/TigerVpnGuid',
-  images: { unoptimized: true },
+  images: {
+    unoptimized: true,
+  },
   trailingSlash: true,
 };
+
+export default nextConfig;
