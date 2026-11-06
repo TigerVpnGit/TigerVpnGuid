@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { faTelegram, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocale } from './Providers';
 
@@ -26,13 +26,11 @@ export default function FaqView() {
     ]
   };
 
-  const items = faqs[locale as keyof typeof faqs] || faqs.en;
+  const items = faqs[locale as keyof typeof faqs] || faqs.fa;
   const title = locale === 'fa' ? 'پرسش‌های متداول' : locale === 'ru' ? 'Часто задаваемые вопросы' : 'Frequently Asked Questions';
-  const btnText = locale === 'fa' ? 'ورود به ربات تلگرام و خرید اشتراک' : locale === 'ru' ? 'Войти в Telegram-бот и купить подписку' : 'Join Telegram Bot & Buy Subscription';
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 text-start">
-      {/* کلاس‌های inline-block و pb-2 مشکل بریدگی حروف گرادیانتی را حل می‌کنند */}
       <h1 className="text-3xl md:text-4xl font-extrabold mb-10 text-center text-gradient inline-block pb-2 w-full">
         {title}
       </h1>
@@ -46,20 +44,46 @@ export default function FaqView() {
         ))}
       </dl>
 
-      {/* دکمه تلگرام */}
+      {/* دکمه‌های ارتباطی */}
       <div className="text-center glass p-8 rounded-[var(--radius)] flex flex-col items-center justify-center gap-5 mt-10">
         <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
           {locale === 'fa' ? 'همین حالا به ما بپیوندید!' : locale === 'ru' ? 'Присоединяйтесь к нам прямо сейчас!' : 'Join us right now!'}
         </h2>
-        <a 
-          href="https://t.me/TigerVPNBot" /* <--- آیدی ربات خودتون رو اینجا بذارید */
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 rounded-full bg-[#229ED9] px-8 py-3 text-white font-bold transition-all hover:bg-[#1e8dc2] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#229ED9]/30"
-        >
-          <FontAwesomeIcon icon={faTelegram} className="h-6 w-6" />
-          {btnText}
-        </a>
+        
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {/* دکمه ربات (خرید) */}
+          <a 
+            href="https://t.me/TigerVPNBot" /* <--- آیدی ربات */
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#229ED9] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#1e8dc2] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#229ED9]/30"
+          >
+            <FontAwesomeIcon icon={faTelegram} className="h-4 w-4" />
+            {locale === 'fa' ? 'خرید اشتراک (ربات)' : 'Buy Subscription (Bot)'}
+          </a>
+
+          {/* دکمه کانال تلگرام */}
+          <a 
+            href="https://t.me/TigerVPNChannel" /* <--- آیدی کانال */
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#0088cc] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#007ab8] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0088cc]/30"
+          >
+            <FontAwesomeIcon icon={faTelegram} className="h-4 w-4" />
+            {locale === 'fa' ? 'کانال اطلاع‌رسانی' : 'News Channel'}
+          </a>
+
+          {/* دکمه اینستاگرام */}
+          <a 
+            href="https://instagram.com/Tiger.VPN" /* <--- آیدی اینستاگرام */
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[#E1306C] px-5 py-2.5 text-sm text-white font-bold transition-all hover:bg-[#c13584] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E1306C]/30"
+          >
+            <FontAwesomeIcon icon={faInstagram} className="h-4 w-4" />
+            Instagram
+          </a>
+        </div>
       </div>
     </div>
   );
