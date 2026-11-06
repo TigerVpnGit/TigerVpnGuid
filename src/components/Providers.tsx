@@ -19,7 +19,7 @@ interface LocaleContextValue {
 
 const LocaleContext = createContext<LocaleContextValue>({
   locale: DEFAULT_LOCALE,
-  dir: 'ltr',
+  dir: 'rtl',
   setLocale: () => {},
 });
 
@@ -47,28 +47,23 @@ function getInitialTheme(): Theme {
   try {
     const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
     if (stored === 'light' || stored === 'dark') return stored;
-  } catch {
-    /* storage may be unavailable; ignore */
-  }
-
+  } catch {}
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+  const [locale, setLocaleState] = useState<Locale>('fa'); // پیش‌فرض فارسی
   const [theme, setThemeState] = useState<Theme>('light');
 
-  // Hydrate from storage / browser once mounted (avoids SSR mismatch).
   useEffect(() => {
     const pathLocale = getLocaleFromPathname(stripBasePath(window.location.pathname));
-    const initial = pathLocale ?? getInitialLocale();
+    // اگر در آدرس زبان بود از آن استفاده کن، اگر نبود اجبارا فارسی کن
+    const initial = pathLocale ?? 'fa'; 
     setLocaleState(initial);
     void i18n.changeLanguage(initial);
-
     setThemeState(getInitialTheme());
   }, []);
 
-  // Keep <html lang> and <html dir> in sync so RTL mirrors the whole layout.
   useEffect(() => {
     const dir = isRtl(locale) ? 'rtl' : 'ltr';
     document.documentElement.lang = locale;
@@ -84,9 +79,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     void i18n.changeLanguage(next);
     try {
       window.localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      /* storage may be unavailable; ignore */
-    }
+    } catch {}
   }, []);
 
   const value = useMemo<LocaleContextValue>(
@@ -98,9 +91,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     setThemeState(next);
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, next);
-    } catch {
-      /* storage may be unavailable; ignore */
-    }
+    } catch {}
   }, []);
 
   const toggleTheme = useCallback(() => {
@@ -108,9 +99,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       const next = current === 'dark' ? 'light' : 'dark';
       try {
         window.localStorage.setItem(THEME_STORAGE_KEY, next);
-      } catch {
-        /* storage may be unavailable; ignore */
-      }
+      } catch {}
       return next;
     });
   }, []);
