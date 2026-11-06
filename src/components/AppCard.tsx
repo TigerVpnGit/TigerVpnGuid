@@ -17,27 +17,27 @@ export default function AppCard({ app }: { app: AppSummary }) {
   return (
     <Link
       href={localizePath(`/guides/${app.os}/${app.app}`, locale)}
-      className="group flex items-center gap-3 rounded border border-surface-dim bg-white p-5 transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/40 dark:bg-slate-900"
+      className="group flex items-center gap-4 rounded-[var(--radius)] glass neon-glow p-5 transition-transform hover:-translate-y-1"
     >
-      <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-surface-low text-primary ring-1 ring-surface-dim/70">
+      <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-black/5 dark:bg-white/5 shadow-sm" style={{ color: 'var(--accent)' }}>
         <AppIcon app={app.app} className="h-6 w-6" />
-        <span className="absolute -bottom-1 -end-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-primary ring-1 ring-surface-dim dark:bg-slate-950">
+        <span className="absolute -bottom-1 -end-1 flex h-5 w-5 items-center justify-center rounded-full glass !border-none shadow-sm" style={{ color: 'var(--text)' }}>
           <OsIcon os={app.os} className="h-3 w-3" />
         </span>
       </span>
-      <span className="min-w-0">
-        <span className="block text-lg font-semibold text-primary group-hover:underline">
+      <span className="min-w-0 flex-1 text-start">
+        <span className="block text-lg font-bold transition-colors group-hover:opacity-80" style={{ color: 'var(--accent)' }}>
           {prettyApp(app.app)}
         </span>
-        <span className="mt-0.5 block text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+        <span className="mt-0.5 block text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>
           {prettyOs(app.os)}
         </span>
         {fm?.summary ? (
-          <span className="mt-0.5 block line-clamp-2 text-sm text-slate-500 dark:text-slate-400">
+          <span className="mt-1 block line-clamp-2 text-sm" style={{ color: 'var(--muted)' }}>
             {fm.summary}
           </span>
         ) : (
-          <span className="mt-0.5 block text-sm text-slate-500 dark:text-slate-400">
+          <span className="mt-1 block text-sm" style={{ color: 'var(--muted)' }}>
             {t('app.guidesAvailable')}
           </span>
         )}

@@ -9,6 +9,8 @@ import { useLocale } from './Providers';
 import { OsIcon, prettyOs } from './icons';
 import { localizePath } from '@/lib/locale-paths';
 import type { AppSummary } from '@/lib/types';
+import Typewriter from './Typewriter';
+import TiltCard from './TiltCard';
 
 export default function HomeView({ apps }: { apps: AppSummary[] }) {
   const { t } = useTranslation();
@@ -24,56 +26,59 @@ export default function HomeView({ apps }: { apps: AppSummary[] }) {
   const filteredApps = selectedOs ? byOs.get(selectedOs) ?? [] : [];
 
   return (
-    <div className="mx-auto max-w-6xl px-4">
-      <section className="py-12 text-center md:py-20">
-        <h1 className="mx-auto max-w-3xl text-4xl font-bold text-primary md:text-5xl">
-          {t('home.heroTitle')}
+    <div className="mx-auto max-w-[800px] px-4 text-center">
+      <section className="py-16 md:py-24">
+        {/* خط زیر (leading و pb) مشکل بریده شدن نقطه‌های حروف فارسی را حل می‌کند */}
+        <h1 className="mx-auto max-w-3xl text-3xl md:text-5xl font-extrabold mb-4 text-gradient min-h-[5rem] leading-[1.4] pb-4 flex items-center justify-center">
+          <Typewriter text={t('home.heroTitle')} speed={40} />
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-500 dark:text-slate-400">
+        <p className="mx-auto max-w-2xl text-lg md:text-xl mt-4" style={{ color: 'var(--muted)' }}>
           {t('home.heroSubtitle')}
         </p>
       </section>
 
-      <section className="pb-8">
-        <h2 className="mb-6 text-2xl font-bold text-primary">{t('home.chooseOs')}</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <section className="mb-14">
+        <h2 className="text-lg font-bold mb-6" style={{ color: 'var(--accent)' }}>
+          {t('home.chooseOs')}
+        </h2>
+        <div className="flex flex-wrap justify-center gap-4">
           {osList.map((os) => {
             const active = os === selectedOs;
             return (
-              <button
-                key={os}
-                type="button"
-                onClick={() => setSelectedOs(active ? null : os)}
-                aria-pressed={active}
-                className={`tap-target flex-col gap-2 rounded border p-5 text-center transition-colors ${
-                  active
-                    ? 'border-primary bg-primary text-white'
-                    : 'border-surface-dim bg-white text-primary hover:bg-surface-low dark:bg-slate-900'
-                }`}
-              >
-                <OsIcon os={os} className="h-8 w-8" />
-                <span className="font-semibold">{prettyOs(os)}</span>
-              </button>
+              <TiltCard key={os} className="w-[118px] h-[110px]">
+                <button
+                  type="button"
+                  onClick={() => setSelectedOs(active ? null : os)}
+                  className={`w-full h-full flex flex-col items-center justify-center gap-3 rounded-2xl glass ${
+                    active ? 'os-card selected !shadow-[0_0_25px_rgba(168,85,247,0.7)] !border-[var(--accent)]' : ''
+                  }`}
+                  style={{ color: active ? '#ffffff' : 'var(--text)' }}
+                >
+                  <OsIcon os={os} className="h-10 w-10" />
+                  <span className="font-semibold text-sm">{prettyOs(os)}</span>
+                </button>
+              </TiltCard>
             );
           })}
         </div>
       </section>
 
       {selectedOs && (
-        <section className="pb-12">
+        <section className="mb-12 text-start animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="mb-6 flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-bold text-primary">
+            <h2 className="text-xl font-bold" style={{ color: 'var(--accent)' }}>
               {t('home.chooseApp', { os: prettyOs(selectedOs) })}
             </h2>
             <button
               type="button"
               onClick={() => setSelectedOs(null)}
-              className="tap-target rounded px-3 text-sm font-medium text-primary hover:bg-surface-low"
+              className="text-sm font-semibold hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--muted)' }}
             >
               {t('home.changeOs')}
             </button>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {filteredApps.map((a) => (
               <AppCard key={`${a.os}/${a.app}`} app={a} />
             ))}
@@ -81,10 +86,11 @@ export default function HomeView({ apps }: { apps: AppSummary[] }) {
         </section>
       )}
 
-      <section className="pb-16 text-center">
+      <section className="pb-16 pt-4">
         <Link
           href={localizePath('/guides', locale)}
-          className="tap-target rounded px-4 text-sm font-medium text-slate-500 underline-offset-4 hover:text-primary hover:underline dark:text-slate-400"
+          className="inline-flex items-center justify-center rounded-full glass px-8 py-3 text-sm font-bold transition-transform hover:-translate-y-1"
+          style={{ color: 'var(--text)' }}
         >
           {t('home.browseGuides')}
         </Link>

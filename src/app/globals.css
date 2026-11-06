@@ -3,97 +3,114 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: 26 54 93;
-  --color-primary-50: 239 244 255;
-  --color-primary-100: 204 219 244;
-  --color-primary-900: 19 41 74;
-  --color-success: 34 197 94;
-  --color-warning: 244 63 94;
-  --color-surface: 248 249 255;
-  --color-surface-low: 239 244 255;
-  --color-surface-dim: 204 219 244;
+  --radius: 14px;
+  --sky: #38bdf8;
+  --purple: #7c3aed;
+  --gradient: linear-gradient(135deg, #38bdf8 0%, #7c8cf8 45%, #a855f7 100%);
+  
+  --bg-1: #eaf3ff;
+  --bg-2: #f4eeff;
+  --text: #1c1b2e;
+  --muted: #5f5c7d;
+  --border: rgba(124,58,237,.15);
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(124,58,237,.18);
+  --glass-shadow: 0 8px 24px rgba(80,60,180,.10);
+  --accent: #7c3aed;
 }
 
 .dark {
-  --color-primary: 147 197 253;
-  --color-primary-50: 15 23 42;
-  --color-primary-100: 30 41 59;
-  --color-primary-900: 191 219 254;
-  --color-success: 74 222 128;
-  --color-warning: 251 113 133;
-  --color-surface: 15 23 42;
-  --color-surface-low: 30 41 59;
-  --color-surface-dim: 51 65 85;
-  color-scheme: dark;
+  --bg-1: #0d1024;
+  --bg-2: #160f2b;
+  --text: #d1d5db;
+  --muted: #9ca3af;
+  --border: rgba(168,133,255,.22);
+  --glass-bg: rgba(255,255,255,.06);
+  --glass-border: rgba(168,133,255,.28);
+  --glass-shadow: 0 8px 30px rgba(0,0,0,.45);
+  --accent: #c084fc;
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  /* اسکرول بار سفارشی */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-1); }
+  ::-webkit-scrollbar-thumb { background: var(--gradient); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
   body {
-    @apply bg-surface text-slate-700 antialiased dark:text-slate-200;
-    font-family: var(--font-inter), Inter, system-ui, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    background:
+      radial-gradient(1100px 500px at 15% -10%, rgba(56,189,248,.28), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(168,85,247,.24), transparent 55%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: "Segoe UI", var(--font-vazirmatn), var(--font-inter), "Tahoma", Arial, sans-serif;
+    @apply antialiased;
   }
 
-  html[lang='fa'] body {
-    font-family: var(--font-vazirmatn), Vazirmatn, var(--font-inter), system-ui, sans-serif;
+  /* شبکه سایبری در پس‌زمینه */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
   }
-
-  /* RTL: nudge list markers and quotes to the correct side. */
-  [dir='rtl'] .prose-ultimateguide ul,
-  [dir='rtl'] .prose-ultimateguide ol {
-    padding-inline-start: 1.625em;
+  .dark body::before {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
   }
 }
 
 @layer components {
-  /* Branded Markdown callouts (rendered from `:::warning` / `:::tip`). */
-  .callout {
-    @apply my-6 rounded border px-4 py-3 text-sm leading-relaxed;
-  }
-  .callout > :first-child {
-    @apply mt-0;
-  }
-  .callout > :last-child {
-    @apply mb-0;
-  }
-  /* Label text is localised at build time and supplied via `data-label`. */
-  .callout::before {
-    content: attr(data-label);
-    @apply mb-1 block text-xs font-semibold uppercase tracking-wide;
+  /* افکت شیشه‌ای با هاله نئونی برای تمام دکمه‌ها و کارت‌ها */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
   }
 
-  .callout-warning {
-    @apply border-warning/30 bg-warning/10 text-rose-900 dark:text-rose-100;
-  }
-  .callout-warning::before {
-    @apply text-warning;
-  }
-
-  .callout-tip {
-    @apply border-success/30 bg-success/10 text-emerald-900 dark:text-emerald-100;
-  }
-  .callout-tip::before {
-    @apply text-emerald-600;
+  /* اعمال نئون روی همه لینک‌ها، دکمه‌ها و کارت‌های شیشه‌ای در کامپیوتر (Hover) و موبایل (Active) */
+  a.glass:hover, a.glass:active,
+  button.glass:hover, button.glass:active,
+  .glass:hover, .glass:active {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(56, 189, 248, 0.2);
+    border-color: rgba(168, 85, 247, 0.6);
   }
 
-  /* Touch-friendly base for interactive elements. */
+  .text-gradient {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* فاصله برای جلوگیری از بریده شدن حروف فارسی */
+    line-height: 1.4;
+    padding-bottom: 0.3rem;
+  }
+  
+  .os-card {
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+  }
+  .os-card.selected {
+    background: var(--gradient);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 14px 30px rgba(124,58,237,.35);
+  }
+
   .tap-target {
     @apply inline-flex min-h-touch min-w-touch items-center justify-center;
-  }
-
-  .dark .prose-ultimateguide {
-    --tw-prose-body: #cbd5e1;
-    --tw-prose-headings: rgb(var(--color-primary));
-    --tw-prose-links: rgb(var(--color-primary));
-    --tw-prose-bold: #f8fafc;
-    --tw-prose-counters: rgb(var(--color-primary));
-    --tw-prose-bullets: rgb(var(--color-surface-dim));
-    --tw-prose-hr: rgb(var(--color-surface-dim));
-    --tw-prose-quotes: #e2e8f0;
-    --tw-prose-code: #f8fafc;
-    --tw-prose-pre-bg: #020617;
   }
 }
