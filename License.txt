@@ -1,11 +1,6 @@
-
-**۲. ساخت فایل `LICENSE`:**
-یک فایل جدید بدون پسوند (یا با اسم دقیق `LICENSE`) در ریشه پروژه بسازید و متن لایسنس MIT را در آن کپی کنید (به جای `[year]` سال جاری و به جای `[fullname]` اسم خودتان یا Tiger VPN را بگذارید):
-
-```text
 MIT License
 
-Copyright (c) 2024 Tiger VPN
+Copyright (c) 2026 MortezaAbner (TigerVpnGit)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
